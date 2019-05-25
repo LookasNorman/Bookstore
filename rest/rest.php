@@ -2,6 +2,12 @@
 //load DB config
 require_once __DIR__.'/config/db.php';
 
+header('Access-Control-Allow-Origin: *');//front and back on other server
+
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    header('Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS');
+    die;
+}
 
 $response = [];
 //connect to DB
@@ -20,7 +26,8 @@ try {
 //if request URI is rest.php/book/1
 //we will parse part book/1 and explode it
 //to get name of class (book) and optional id from db (1)
-$uriPathInfo = $_SERVER['PATH_INFO'];
+//$uriPathInfo = $_SERVER['PATH_INFO'];
+$uriPathInfo = $_SERVER['REQUEST_URI'];
 //explode path info
 $path = explode('/', $uriPathInfo);
 $requestClass = $path[1];

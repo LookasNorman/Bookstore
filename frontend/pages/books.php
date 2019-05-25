@@ -49,22 +49,22 @@
             <div class="panel-body">
                 <ul class="list-group" id="booksList">
                     <!--                    EXAMPLE BOOK START-->
-                    <!--                    <li class="list-group-item">-->
-                    <!--                        <div class="panel panel-default">-->
-                    <!--                            <div class="panel-heading">-->
-                    <!--                                <span class="bookTitle">Example book 1</span>-->
-                    <!--                                <button data-id="1"-->
-                    <!--                                        class="btn btn-danger pull-right btn-xs btn-book-remove"><i-->
-                    <!--                                        class="fa fa-trash"></i>-->
-                    <!--                                </button>-->
-                    <!--                                <button data-id="1"-->
-                    <!--                                        class="btn btn-primary pull-right btn-xs btn-book-show-description"><i-->
-                    <!--                                        class="fa fa-info-circle"></i>-->
-                    <!--                                </button>-->
-                    <!--                            </div>-->
-                    <!--                            <div class="panel-body book-description"></div>-->
-                    <!--                        </div>-->
-                    <!--                    </li>-->
+<!--                                        <li class="list-group-item">-->
+<!--                                            <div class="panel panel-default">-->
+<!--                                                <div class="panel-heading">-->
+<!--                                                    <span class="bookTitle">Example book 1</span>-->
+<!--                                                    <button data-id="1"-->
+<!--                                                            class="btn btn-danger pull-right btn-xs btn-book-remove"><i-->
+<!--                                                            class="fa fa-trash"></i>-->
+<!--                                                    </button>-->
+<!--                                                    <button data-id="1"-->
+<!--                                                            class="btn btn-primary pull-right btn-xs btn-book-show-description"><i-->
+<!--                                                            class="fa fa-info-circle"></i>-->
+<!--                                                    </button>-->
+<!--                                                </div>-->
+<!--                                                <div class="panel-body book-description"></div>-->
+<!--                                            </div>-->
+<!--                                        </li>-->
                     <!--                    EXAMPLE BOOK END-->
                 </ul>
             </div>
