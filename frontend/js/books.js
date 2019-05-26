@@ -76,13 +76,14 @@ $(function () {
                         title: this.elements.title.value,
                         description: this.elements.description.value
                     };
-                    console.log(book);
                     $.ajax({
                         url: URL + "/" + this.elements.id.value,
                         type: "PATCH",
                         data: book
-                    })
-                })
+                    });
+                    //hide edit form
+                    $('#bookEdit').css("display", "none");
+                });
             })
             .fail(showError);
     })
