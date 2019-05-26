@@ -48,6 +48,16 @@ $(function () {
         .fail(showError);
 
     /**
+     * render edit form for book
+     * @param book
+     */
+    function renderEditForm(book) {
+        $('#id').val(book.id);
+        $('#bookEdit #title').val(book.title);
+        $('#bookEdit #description').val(book.description);
+    }
+
+    /**
      * get book for edit
      */
     $('#bookEditSelect').on('click', 'option', function () {
@@ -58,6 +68,8 @@ $(function () {
         })
             .done(function (result) {
                 $('#bookEdit').css("display", "block");
+                result.success.map(renderEditForm);
+
             })
             .fail(showError);
     })
