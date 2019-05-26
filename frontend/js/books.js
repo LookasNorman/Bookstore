@@ -46,11 +46,24 @@ $(function () {
     });
 //show description
     $('#booksList').on('click', '.btn-book-show-description', function () {
-        if ($(this).parent().siblings().css("display") === 'none') {
-            $(this).parent().siblings().css("display", "inline");
-        } else {
-            $(this).parent().siblings().css("display", "none");
-        }
+//  (display: none / display: inline)
+//         if ($(this).parent().siblings().css("display") === 'none') {
+//             $(this).parent().siblings().css("display", "inline");
+//         } else {
+//             $(this).parent().siblings().css("display", "none");
+//         }
+//book list - one book with description
+        console.log(this.dataset.id);
+        $.ajax({
+            url: URL + "/" + this.dataset.id,
+            type: "GET"
+        })
+            .done(function (result) {
+                const bookListHTML = result.success.map(renderBook).join("");
+                $('#booksList').html(bookListHTML);
+                $('.book-description').css("display", "inline");
+            })
+            .fail(showError);
     });
 
 
