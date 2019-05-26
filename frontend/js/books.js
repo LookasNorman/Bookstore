@@ -69,8 +69,19 @@ $(function () {
             .done(function (result) {
                 $('#bookEdit').css("display", "block");
                 result.success.map(renderEditForm);
-                $('#bookEdit button').on('click', function () {
-
+                $('#bookEdit').on('submit', function (event) {
+                event.preventDefault();
+                    let book = {
+                        id: this.elements.id.value,
+                        title: this.elements.title.value,
+                        description: this.elements.description.value
+                    };
+                    console.log(book);
+                    $.ajax({
+                        url: URL + "/" + this.elements.id.value,
+                        type: "PATCH",
+                        data: book
+                    })
                 })
             })
             .fail(showError);
