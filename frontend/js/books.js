@@ -36,16 +36,19 @@ $(function () {
     }
 
     /**
-     * get and show book list
+     *
      */
-    $.getJSON(URL)
-        .done(function (result) {
-            const bookListHTML = result.success.map(renderBook).join("");
-            $('#booksList').html(bookListHTML);
-            const bookEditList = result.success.map(renderEditList).join("");
-            $('#bookEditSelect').append(bookEditList);
-        })
-        .fail(showError);
+    function bookList() {
+        $.getJSON(URL)
+            .done(function (result) {
+                const bookListHTML = result.success.map(renderBook).join("");
+                $('#booksList').html(bookListHTML);
+                const bookEditList = result.success.map(renderEditList).join("");
+                $('#bookEditSelect').html("<option value=\"\"> -- Select Book for edit --</option>");
+                $('#bookEditSelect').append(bookEditList);
+            })
+            .fail(showError);
+    }
 
     /**
      * render edit form for book
@@ -56,6 +59,8 @@ $(function () {
         $('#bookEdit #title').val(book.title);
         $('#bookEdit #description').val(book.description);
     }
+
+    bookList();
 
     /**
      * get book for edit
@@ -70,7 +75,7 @@ $(function () {
                 $('#bookEdit').css("display", "block");
                 result.success.map(renderEditForm);
                 $('#bookEdit').on('submit', function (event) {
-                event.preventDefault();
+                    event.preventDefault();
                     let book = {
                         id: this.elements.id.value,
                         title: this.elements.title.value,
@@ -83,11 +88,11 @@ $(function () {
                     });
                     //hide edit form
                     $('#bookEdit').css("display", "none");
+                    bookList();
                 });
             })
             .fail(showError);
     })
-
 
 
     /**
@@ -100,7 +105,8 @@ $(function () {
             type: "DELETE"
         })
             .done(function () {
-                $(button).closest('.list-group-item').remove();
+                // $(button).closest('.list-group-item').remove();
+                bookList();
             })
             .fail(showError);
     });
@@ -150,7 +156,6 @@ $(function () {
             })
             .fail(showError);
     });
-
 
 
 });
