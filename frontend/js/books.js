@@ -69,7 +69,9 @@ $(function () {
             .done(function (result) {
                 $('#bookEdit').css("display", "block");
                 result.success.map(renderEditForm);
+                $('#bookEdit button').on('click', function () {
 
+                })
             })
             .fail(showError);
     })

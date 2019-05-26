@@ -34,7 +34,7 @@
             <div class="form-group">
                 <label for="description">Description</label>
                 <textarea class="form-control" name="description" id="description" cols="30" rows="5"
-                          placeholder="Description...">test</textarea>
+                          placeholder="Description..."></textarea>
             </div>
             <button type="submit" class="btn btn-primary"><i class="fa fa-book"></i>&nbsp;Edit</button>
         </form>
