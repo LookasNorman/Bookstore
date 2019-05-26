@@ -12,6 +12,10 @@ function authorList() {
         .done(function (result) {
             const authorListHTML = result.success.map(renderAuthor).join("");
             $('#authorsList').html(authorListHTML);
+
+            const authorEditList = result.success.map(renderEditList).join("");
+            $('#authorEditSelect').html("<option value=\"\"> -- Select Author for edit --</option>");
+            $('#authorEditSelect').append(authorEditList);
         })
         .fail(showError)
 }
@@ -30,6 +34,11 @@ function renderAuthor(author) {
             </div>
         </div>
     </li>`;
+}
+
+
+function renderEditList(author) {
+    return `<option value="${author.id}">${author.name} ${author.surname}</option>`;
 }
 
 /**
@@ -71,3 +80,6 @@ $('#authorsList').on('click', '.btn-author-remove', function () {
         })
         .fail(showError);
 })
+
+
+console.log($('#authorEditSelect'));
