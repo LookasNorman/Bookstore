@@ -57,6 +57,7 @@ $(function () {
             type: "GET"
         })
             .done(function (result) {
+                $('#bookEdit').css("display", "block");
             })
             .fail(showError);
     })
