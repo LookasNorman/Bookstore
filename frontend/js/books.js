@@ -152,7 +152,7 @@ $(function () {
         })
             .done(function (res) {
                 book = res.success[0];
-                $('#booksList').append($(renderBook(book)));
+                bookList();
             })
             .fail(showError);
     });
