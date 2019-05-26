@@ -6,7 +6,7 @@ $(function () {
         showModal("Error");
     }
 
-//render book list
+    //render book list
     function renderBook(book) {
         return `<li class="list-group-item">
           <div class="panel panel-default">
@@ -26,13 +26,46 @@ $(function () {
           </li>`;
     }
 
+    /**
+     * render book list for edit
+     * @param book
+     * @returns {string}
+     */
+    function renderEditList(book) {
+        return `<option value="${book.id}">${book.title}</option>`;
+    }
+
+    /**
+     * get and show book list
+     */
     $.getJSON(URL)
         .done(function (result) {
             const bookListHTML = result.success.map(renderBook).join("");
             $('#booksList').html(bookListHTML);
+            const bookEditList = result.success.map(renderEditList).join("");
+            $('#bookEditSelect').append(bookEditList);
         })
         .fail(showError);
-//remove book
+
+    /**
+     * get book for edit
+     */
+    $('#bookEditSelect').on('click', 'option', function () {
+        const editId = this.value;
+        $.ajax({
+            url: URL + "/" + editId,
+            type: "GET"
+        })
+            .done(function (result) {
+            })
+            .fail(showError);
+    })
+
+
+
+    /**
+     * remove book
+     */
     $('#booksList').on('click', '.btn-book-remove', function () {
         const button = this;
         $.ajax({
@@ -44,7 +77,10 @@ $(function () {
             })
             .fail(showError);
     });
-//show description
+
+    /**
+     * show one book with description
+     */
     $('#booksList').on('click', '.btn-book-show-description', function () {
 //  (display: none / display: inline)
 //         if ($(this).parent().siblings().css("display") === 'none') {
@@ -53,7 +89,6 @@ $(function () {
 //             $(this).parent().siblings().css("display", "none");
 //         }
 //book list - one book with description
-        console.log(this.dataset.id);
         $.ajax({
             url: URL + "/" + this.dataset.id,
             type: "GET"
@@ -67,7 +102,9 @@ $(function () {
     });
 
 
-//add book
+    /**
+     * add new book
+     */
     $('#bookAdd').on('submit', function (event) {
         event.preventDefault();
 
@@ -86,5 +123,7 @@ $(function () {
             })
             .fail(showError);
     });
+
+
 
 });
