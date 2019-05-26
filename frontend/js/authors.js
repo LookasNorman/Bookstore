@@ -36,10 +36,22 @@ function renderAuthor(author) {
     </li>`;
 }
 
-
+/**
+ * Render author edit list
+ * @param author
+ * @returns {string}
+ */
 function renderEditList(author) {
     return `<option value="${author.id}">${author.name} ${author.surname}</option>`;
 }
+
+
+function renderEditForm(author) {
+    $('#id').val(author.id);
+    $('#authorEdit #name').val(author.name);
+    $('#authorEdit #surname').val(author.surname);
+}
+
 
 /**
  *
@@ -82,4 +94,31 @@ $('#authorsList').on('click', '.btn-author-remove', function () {
 })
 
 
-console.log($('#authorEditSelect'));
+$('#authorEditSelect').on('click', 'option', function () {
+    const editId = this.value;
+    $.ajax({
+        url: URL + "/" + editId,
+        type: "GET"
+    })
+        .done(function (result) {
+            $('#authorEdit').css("display", "block");
+            result.success.map(renderEditForm);
+            $('#authorEdit').on('submit', function (event) {
+                event.preventDefault();
+                let author = {
+                    id: this.elements.id.value,
+                    name: this.elements.name.value,
+                    surname: this.elements.surname.value
+                };
+                $.ajax({
+                    url: URL + "/" + this.elements.id.value,
+                    type: "PATCH",
+                    data: author
+                });
+                //hide edit form
+                $('#authorEdit').css("display", "none");
+                authorList();
+            });
+        })
+        .fail(showError);
+});
