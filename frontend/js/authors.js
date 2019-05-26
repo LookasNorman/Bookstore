@@ -4,26 +4,37 @@ function showError(xhr, status, error) {
     showModal("Error");
 }
 
+/**
+ * show author list from DB
+ */
 function authorList() {
     $.getJSON(URL)
         .done(function (result) {
             const authorListHTML = result.success.map(renderAuthor).join("");
             $('#authorsList').html(authorListHTML);
-            console.log(result);
         })
+        .fail(showError)
 }
 
+/**
+ * Render HTML list of author
+ * @param author
+ * @returns {string}
+ */
 function renderAuthor(author) {
     return `<li class="list-group-item">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><span class="authorTitle">${author.name} ${author.surname}</span>
-                        <button data-id="1" class="btn btn-danger pull-right btn-xs btn-author-remove"><i
-                            class="fa fa-trash"></i></button>
-                    </div>
-                </div>
-            </li>`;
+        <div class="panel panel-default">
+            <div class="panel-heading"><span class="authorTitle">${author.name} ${author.surname}</span>
+                <button data-id="${author.id}" class="btn btn-danger pull-right btn-xs btn-author-remove"><i
+                    class="fa fa-trash"></i></button>
+            </div>
+        </div>
+    </li>`;
 }
 
+/**
+ *
+ */
 authorList();
 
 /**
@@ -41,8 +52,22 @@ $('#authorAdd').on('submit', function (event) {
     })
         .done(function (res) {
             book = res.success[0];
-            console.log(book);
+            authorList();
         })
         .fail(showError);
+})
 
+/**
+ * remove author from list and DB
+ */
+$('#authorsList').on('click', '.btn-author-remove', function () {
+    const button = this;
+    $.ajax({
+        url: URL + "/" + this.dataset.id,
+        type: "DELETE"
+    })
+        .done(function () {
+            authorList();
+        })
+        .fail(showError);
 })
