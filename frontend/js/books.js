@@ -9,22 +9,6 @@ $(function () {
 
     //render book list
     function renderBook(book) {
-        // return `<li class="list-group-item">
-        //   <div class="panel panel-default">
-        //     <div class="panel-heading">
-        //        <span class="bookTitle">${book.title}</span>
-        //           <button data-id="${book.id}"
-        //              class="btn btn-danger pull-right btn-xs btn-book-remove"><i
-        //              class="fa fa-trash"></i>
-        //           </button>
-        //           <button data-id="${book.id}"
-        //              class="btn btn-primary pull-right btn-xs btn-book-show-description"><i
-        //              class="fa fa-info-circle"></i>
-        //           </button>
-        //     </div>
-        //   <div class="panel-body book-description">${book.description}</div>
-        //   </div>
-        //   </li>`;
         return `<li class="list-group-item">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -78,7 +62,19 @@ $(function () {
         $('#bookEdit #description').val(book.description);
     }
 
+    function renderAuthorListToAddBook(author) {
+        return `<option value="${author.id}">${author.name} ${author.surname}</option>`;
+    }
+
     bookList();
+
+    $.getJSON(URL_author)
+        .done(function (result) {
+            const authorList = result.success.map(renderAuthorListToAddBook).join("");
+            $('#author_id').html("<option value=\"\"> -- Select Author --</option>");
+            $('#author_id').append(authorList);
+
+        })
 
     /**
      * get book for edit
@@ -133,13 +129,6 @@ $(function () {
      * show one book with description
      */
     $('#booksList').on('click', '.btn-book-show-description', function () {
-//  (display: none / display: inline)
-//         if ($(this).parent().siblings().css("display") === 'none') {
-//             $(this).parent().siblings().css("display", "inline");
-//         } else {
-//             $(this).parent().siblings().css("display", "none");
-//         }
-//book list - one book with description
         $.ajax({
             url: URL_books + "/" + this.dataset.id,
             type: "GET"
