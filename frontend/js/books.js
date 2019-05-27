@@ -67,7 +67,7 @@ $(function () {
      * @param author
      * @returns {string}
      */
-    function renderAuthorListToAddBook(author) {
+    function renderAuthorListToBook(author) {
         return `<option value="${author.id}">${author.name} ${author.surname}</option>`;
     }
 
@@ -75,9 +75,13 @@ $(function () {
 
     $.getJSON(URL_author)
         .done(function (result) {
-            const authorList = result.success.map(renderAuthorListToAddBook).join("");
+            const authorList = result.success.map(renderAuthorListToBook).join("");
             $('#author_id').html("<option value=\"\"> -- Select Author --</option>");
             $('#author_id').append(authorList);
+
+            $('#author_id_edit').html("<option value=\"\"> -- Select Author --</option>");
+            $('#author_id_edit').append(authorList);
+
 
         })
         .fail(showError);
