@@ -62,6 +62,11 @@ $(function () {
         $('#bookEdit #description').val(book.description);
     }
 
+    /**
+     * render author list for add new book form
+     * @param author
+     * @returns {string}
+     */
     function renderAuthorListToAddBook(author) {
         return `<option value="${author.id}">${author.name} ${author.surname}</option>`;
     }
@@ -75,6 +80,7 @@ $(function () {
             $('#author_id').append(authorList);
 
         })
+        .fail(showError);
 
     /**
      * get book for edit
@@ -150,7 +156,8 @@ $(function () {
 
         let book = {
             title: this.elements.title.value,
-            description: this.elements.description.value
+            description: this.elements.description.value,
+            author_id: this.elements.author_id.value
         };
 
         $.post({
