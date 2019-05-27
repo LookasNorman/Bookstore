@@ -60,10 +60,18 @@ $(function () {
         $('#id').val(book.id);
         $('#bookEdit #title').val(book.title);
         $('#bookEdit #description').val(book.description);
+        const authorId = book.author_id;
+        $('#author_id_edit option').each(function (e) {
+            if (e == authorId) {
+                $(this).attr("selected", true);
+            } else {
+                $(this).attr("selected", false);
+            }
+        });
     }
 
     /**
-     * render author list for add new book form
+     * render author list for book form (add / edit)
      * @param author
      * @returns {string}
      */
@@ -103,7 +111,8 @@ $(function () {
                     let book = {
                         id: this.elements.id.value,
                         title: this.elements.title.value,
-                        description: this.elements.description.value
+                        description: this.elements.description.value,
+                        author_id: this.elements.author_id.value
                     };
                     $.ajax({
                         url: URL_books + "/" + this.elements.id.value,
