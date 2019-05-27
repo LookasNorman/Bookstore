@@ -1,6 +1,7 @@
 $(function () {
 
-    const URL = 'http://localhost:8000/book';
+    const URL_books = 'http://localhost:8000/book';
+    const URL_author = 'http://localhost:8000/author';
 
     function showError(xhr, status, error) {
         showModal("Error");
@@ -8,22 +9,39 @@ $(function () {
 
     //render book list
     function renderBook(book) {
+        // return `<li class="list-group-item">
+        //   <div class="panel panel-default">
+        //     <div class="panel-heading">
+        //        <span class="bookTitle">${book.title}</span>
+        //           <button data-id="${book.id}"
+        //              class="btn btn-danger pull-right btn-xs btn-book-remove"><i
+        //              class="fa fa-trash"></i>
+        //           </button>
+        //           <button data-id="${book.id}"
+        //              class="btn btn-primary pull-right btn-xs btn-book-show-description"><i
+        //              class="fa fa-info-circle"></i>
+        //           </button>
+        //     </div>
+        //   <div class="panel-body book-description">${book.description}</div>
+        //   </div>
+        //   </li>`;
         return `<li class="list-group-item">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-               <span class="bookTitle">${book.title}</span>
-                  <button data-id="${book.id}"
-                     class="btn btn-danger pull-right btn-xs btn-book-remove"><i
-                     class="fa fa-trash"></i>
-                  </button>
-                  <button data-id="${book.id}"
-                     class="btn btn-primary pull-right btn-xs btn-book-show-description"><i
-                     class="fa fa-info-circle"></i>
-                  </button>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="bookTitle">${book.title} - ${book.author.name} ${book.author.surname}</span>
+                    <button data-id="${book.id}"
+                            class="btn btn-danger pull-right btn-xs btn-book-remove"><i
+                            class="fa fa-trash"></i>
+                    </button>
+                    <button data-id="${book.id}"
+                            class="btn btn-primary pull-right btn-xs btn-book-show-description"><i
+                            class="fa fa-info-circle"></i>
+                    </button>
+                </div>
+                <div class="panel-body book-description">${book.description}</div>
             </div>
-          <div class="panel-body book-description">${book.description}</div>
-          </div> 
-          </li>`;
+        </li>`;
+
     }
 
     /**
@@ -39,7 +57,7 @@ $(function () {
      *
      */
     function bookList() {
-        $.getJSON(URL)
+        $.getJSON(URL_books)
             .done(function (result) {
                 const bookListHTML = result.success.map(renderBook).join("");
                 $('#booksList').html(bookListHTML);
@@ -68,7 +86,7 @@ $(function () {
     $('#bookEditSelect').on('click', 'option', function () {
         const editId = this.value;
         $.ajax({
-            url: URL + "/" + editId,
+            url: URL_books + "/" + editId,
             type: "GET"
         })
             .done(function (result) {
@@ -82,7 +100,7 @@ $(function () {
                         description: this.elements.description.value
                     };
                     $.ajax({
-                        url: URL + "/" + this.elements.id.value,
+                        url: URL_books + "/" + this.elements.id.value,
                         type: "PATCH",
                         data: book
                     });
@@ -101,7 +119,7 @@ $(function () {
     $('#booksList').on('click', '.btn-book-remove', function () {
         const button = this;
         $.ajax({
-            url: URL + "/" + this.dataset.id,
+            url: URL_books + "/" + this.dataset.id,
             type: "DELETE"
         })
             .done(function () {
@@ -123,7 +141,7 @@ $(function () {
 //         }
 //book list - one book with description
         $.ajax({
-            url: URL + "/" + this.dataset.id,
+            url: URL_books + "/" + this.dataset.id,
             type: "GET"
         })
             .done(function (result) {
@@ -147,7 +165,7 @@ $(function () {
         };
 
         $.post({
-            url: URL,
+            url: URL_books,
             data: book
         })
             .done(function (res) {
